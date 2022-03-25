@@ -24,7 +24,7 @@ const Page = ({ children, title, slug }) => {
           eros magna vel ligula.
         </p>
       </div>
-      <div className={styles.map}>{children}</div>
+      <div className="map-wrapper">{children}</div>
     </div>
   );
 };

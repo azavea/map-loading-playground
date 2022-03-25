@@ -217,11 +217,9 @@ export default function Detail({ community, communities }) {
         />
       )}
       <style global jsx>{`
-        
         .map--transition {
           transition: opacity ${state.transition}ms ease-in-out
         }
-
         .panel {
           position: absolute;
             z-index: 9000;
@@ -234,20 +232,17 @@ export default function Detail({ community, communities }) {
           margin-top: 0;
           margin-bottom: 10px;
         }
-        .map-container {
+        .map-wrapper {
+          flex: 1;
+          position: relative;
           background: ${state.backgroundColor};
           background-size: 400% 100%;
-          ${
-            state.preload === "skeleton" && state.skeletonColor === "light"
-              ? `background-image: linear-gradient(
+          background-image: linear-gradient(
             270deg,
             #bbb,
             #ddd,
             #ddd,
             #bbb);
-          `
-              : ""
-          }
           ${
             state.preload === "skeleton" && state.skeletonColor === "dark"
               ? `background-image: linear-gradient(
@@ -265,16 +260,15 @@ export default function Detail({ community, communities }) {
         ${
           state.preload === "skeleton"
             ? ` @keyframes skeleton {
-          0% {
-            background-position: 100% 0;
-          }
-          to {
-            background-position: -200% 0;
-          }
-        }`
+                  0% {
+                    background-position: 100% 0;
+                  }
+                  to {
+                    background-position: -200% 0;
+                  }
+              }`
             : ""
         }
-
         }
       `}</style>
     </Page>
