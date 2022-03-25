@@ -217,12 +217,16 @@ export default function Detail({ community, communities }) {
         />
       )}
       <style global jsx>{`
-        .map--transition {
-          transition: opacity ${state.transition}ms ease-in-out
-        }
+         ${
+           state.postload === "transition"
+             ? `.map {
+                  transition: opacity ${state.transition}ms ease-in-out
+                }`
+             : ""
+         }
         .panel {
           position: absolute;
-            z-index: 9000;
+          z-index: 9000;
           background-color: #fff;
           padding: 10px;
           top: 10px;
