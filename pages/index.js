@@ -217,16 +217,14 @@ export default function Detail({ community, communities }) {
         />
       )}
       <style global jsx>{`
-        ${
-          state.postload === "transition"
-            ? `.map {
+        
+        .map--transition {
           transition: opacity ${state.transition}ms ease-in-out
-        }`
-            : ""
         }
+
         .panel {
           position: absolute;
-          z-index: 9000;
+            z-index: 9000;
           background-color: #fff;
           padding: 10px;
           top: 10px;
@@ -246,10 +244,10 @@ export default function Detail({ community, communities }) {
             #bbb,
             #ddd,
             #ddd,
-            #bbb
+            #bbb);
           `
               : ""
-          });
+          }
           ${
             state.preload === "skeleton" && state.skeletonColor === "dark"
               ? `background-image: linear-gradient(
