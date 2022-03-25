@@ -4,7 +4,7 @@ import "mapbox-gl/src/css/mapbox-gl.css";
 
 import places from "/data/places";
 
-const Map = ({ delay, preload, postload }) => {
+const Map = ({ delay, preload, postload, basemap, zoom }) => {
   mapboxgl.accessToken =
     "pk.eyJ1IjoiYXphdmVhIiwiYSI6IkFmMFBYUUUifQ.eYn6znWt8NzYOa3OrWop8A";
 
@@ -19,15 +19,14 @@ const Map = ({ delay, preload, postload }) => {
     setMounted(true);
     if (!mounted) {
       setTimeout(() => {
-        const place = places[getRandomInt(places.length)]
+        const place = places[getRandomInt(places.length)];
         const map = new mapboxgl.Map({
           cooperativeGestures: true,
           container: "map",
-          style:
-            "mapbox://styles/azavea/ckz3jjuxd001x15nr01wh9fve?optimize=true",
+          style: basemap,
           center: [place.Lng, place.Lat],
           minZoom: 0,
-          zoom: 7,
+          zoom: zoom,
           maxZoom: 18,
         });
 
@@ -36,12 +35,39 @@ const Map = ({ delay, preload, postload }) => {
           showZoom: true,
         });
 
-        console.log(postload === "default");
-
         postload === "default" && setLoaded(true);
 
-        map.on("load", function () {
-          setLoaded(true);
+        map.on("style.load", function () {
+          console.log("style.load");
+
+          map.addSource("raster-source", {
+            type: "raster",
+            tiles: [window.location.origin + "/images/tiles/{z}/{x}/{y}.png"],
+            minzoom: 0,
+            maxzoom: 6,
+            tileSize: 512,
+          });
+
+          map.addLayer(
+            {
+              id: "raster-layer",
+              type: "raster",
+              source: "raster-source",
+              paint: {
+                "raster-opacity": 0.8,
+                "raster-resampling": "nearest",
+              },
+            },
+            basemap === "mapbox://styles/mapbox/satellite-v9"
+              ? ""
+              : "road-label"
+          );
+
+          map.on("load", function () {
+            setTimeout(() => {
+              setLoaded(true);
+            }, 0);
+          });
         });
 
         map.addControl(nav, "bottom-right");

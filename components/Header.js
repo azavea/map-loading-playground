@@ -28,7 +28,7 @@ const Header = () => {
     <div className={styles.header}>
       <div className={styles.left}>
         <Link href={`/`}>
-          <a className={styles.brand}>Natural Hazard Risk</a>
+          <a className={styles.brand}>Find a location</a>
         </Link>
       </div>
       <div className={styles.right}>
@@ -40,7 +40,10 @@ const Header = () => {
           >
             <Icon name="bars" />
           </button>
-          <div className={`${styles.menu} ${isOpen ? styles.menuopen : ""}`} role="menu">
+          <div
+            className={`${styles.menu} ${isOpen ? styles.menuopen : ""}`}
+            role="menu"
+          >
             {links.map((link) => (
               <a key={link.permalink} href={link.permalink}>
                 {link.text}

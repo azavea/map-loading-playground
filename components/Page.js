@@ -8,11 +8,10 @@ const Page = ({ children, title, slug }) => {
   return (
     <div className={styles.app}>
       <div className={styles.content}>
-        <h2>Philadelphia</h2>
+        <h2>Map loading testing</h2>
         <p className="large">
-          Philadelphia will see increased hazards in the future—in addition to
-          risk that it will also experience. Did we mention hazard and risk are
-          different?
+          How should we treat the map before the content renders, and also as it
+          renders?
         </p>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. In venenatis
