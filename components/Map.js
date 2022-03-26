@@ -35,7 +35,7 @@ const Map = ({ delay, preload, postload, basemap, zoom }) => {
           showZoom: true,
         });
 
-        postload === "default" && setLoaded(true);
+        postload === "none" && setLoaded(true);
 
         map.on("style.load", function () {
           console.log("style.load");
@@ -77,7 +77,11 @@ const Map = ({ delay, preload, postload, basemap, zoom }) => {
 
   return (
     <div className="map-container">
-      <div id="map" className="map" style={{ opacity: loaded ? 1 : 0 }}></div>
+      <div
+        id="map"
+        className={`map preload-${preload} postload-${postload}`}
+        style={{ opacity: loaded ? 1 : 0 }}
+      ></div>
       <style global jsx>{`
         .map-container {
           position: absolute;
