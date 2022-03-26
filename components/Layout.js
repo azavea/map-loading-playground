@@ -18,6 +18,7 @@ export default function Layout({ children }) {
 
         main {
           flex: 1;
+          height: calc(100% - 48px);
         }
       `}</style>
     </div>

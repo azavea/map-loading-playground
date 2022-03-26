@@ -12,6 +12,7 @@ const configDefault = {
   transition: 200,
   delay: 500,
   zoom: 7,
+  raster: "pop-density",
   backgroundColor: "#dddddd",
   skeletonColor: "dark",
   preload: "skeleton",
@@ -49,6 +50,7 @@ function reducer(state, action, payload) {
 
 export default function Detail({ community, communities }) {
   function handleFormChange(e) {
+    console.log(e.target.value);
     dispatch({
       type: "FORM_CHANGE",
       field: e.target.name,
@@ -102,8 +104,8 @@ export default function Detail({ community, communities }) {
               name="preload"
               id="preload"
             >
-              <option value="solid">Solid color</option>
               <option value="skeleton">Skeleton</option>
+              <option value="solid">Solid color</option>
               <option value="spinner">Spinner</option>
             </select>
           </fieldset>
@@ -121,7 +123,7 @@ export default function Detail({ community, communities }) {
               </select>
             </fieldset>
           )}
-          {state.preload === "solid" && (
+          {(state.preload === "solid" || state.preload === "spinner") && (
             <fieldset>
               <label htmlFor="backgroundColor">Color</label>
               <input
@@ -196,6 +198,18 @@ export default function Detail({ community, communities }) {
             </select>
           </fieldset>
           <fieldset>
+            <label htmlFor="transition">Raster</label>
+            <select
+              defaultValue={state.raster}
+              onChange={(e) => handleFormChange(e)}
+              name="raster"
+              id="raster"
+            >
+              <option value="pop-density">Pop. density</option>
+              <option value="none">None</option>
+            </select>
+          </fieldset>
+          <fieldset>
             <label htmlFor="zoom">Zoom</label>
             <input
               onChange={(e) => handleFormChange(e)}
@@ -211,6 +225,7 @@ export default function Detail({ community, communities }) {
           </button>
         </div>
       )}
+      <div className="spinner"></div>
       {state.ready && (
         <Map
           delay={state.delay}
@@ -219,6 +234,7 @@ export default function Detail({ community, communities }) {
           key={state.count}
           basemap={state.basemap}
           zoom={state.zoom}
+          raster={state.raster}
         />
       )}
       <style global jsx>{`
@@ -229,6 +245,36 @@ export default function Detail({ community, communities }) {
                 }`
              : ""
          }
+
+  ${
+    state.preload === "spinner"
+      ? `.spinner {
+          height: 48px;
+          width: 48px;
+          color: rgba(90, 90, 90, 0.2);
+          position: absolute;
+          display: inline-block;
+          border: 5px solid;
+          border-radius: 50%;
+          border-right-color: #5a5a5a;
+          animation: rotate 1s linear infinite;
+          margin: auto;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0; 
+        }
+
+        @keyframes rotate {
+          0% { transform: rotate(0); }
+          100% { transform: rotate(360deg); } 
+        }`
+      : ""
+  }
+
+
+
+        
         .panel {
           position: absolute;
           z-index: 9000;
@@ -278,7 +324,7 @@ export default function Detail({ community, communities }) {
           background-size: 400% 100%;
           background-image: linear-gradient(270deg,#bbb,#ddd,#ddd,#bbb);
           ${
-            state.preload === "solid"
+            state.preload === "solid" || state.preload === "spinner"
               ? `background: ${state.backgroundColor};`
               : ""
           }

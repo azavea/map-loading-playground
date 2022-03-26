@@ -24,6 +24,15 @@ h6 {
   color: var(--heading);
 }
 
+h1:first-child,
+h2:first-child,
+h3:first-child,
+h4:first-child,
+h5:first-child,
+h6:first-child {
+  margin-top: 0;
+}
+
 p {
   line-height: 1.4;
   margin-bottom: var(--space-300);
@@ -90,11 +99,19 @@ ol {
 main {
 }
 
+li:not(:last-child) {
+  margin-bottom: var(--space-200);
+}
+
 hr {
   height: 1px;
   width: 100%;
   border: none;
   background-color: var(--gray-700);
+}
+
+strong {
+  font-weight: var(--weight-medium);
 }
 
 .sr-only {

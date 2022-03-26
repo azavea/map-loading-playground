@@ -4,7 +4,7 @@ import "mapbox-gl/src/css/mapbox-gl.css";
 
 import places from "/data/places";
 
-const Map = ({ delay, preload, postload, basemap, zoom }) => {
+const Map = ({ delay, preload, postload, basemap, zoom, raster }) => {
   mapboxgl.accessToken =
     "pk.eyJ1IjoiYXphdmVhIiwiYSI6IkFmMFBYUUUifQ.eYn6znWt8NzYOa3OrWop8A";
 
@@ -40,33 +40,33 @@ const Map = ({ delay, preload, postload, basemap, zoom }) => {
         map.on("style.load", function () {
           console.log("style.load");
 
-          map.addSource("raster-source", {
-            type: "raster",
-            tiles: [window.location.origin + "/images/tiles/{z}/{x}/{y}.png"],
-            minzoom: 0,
-            maxzoom: 6,
-            tileSize: 512,
-          });
-
-          map.addLayer(
-            {
-              id: "raster-layer",
+          if (raster === "pop-density") {
+            map.addSource("raster-source", {
               type: "raster",
-              source: "raster-source",
-              paint: {
-                "raster-opacity": 0.8,
-                "raster-resampling": "nearest",
+              tiles: [window.location.origin + "/images/tiles/{z}/{x}/{y}.png"],
+              minzoom: 0,
+              maxzoom: 6,
+              tileSize: 512,
+            });
+
+            map.addLayer(
+              {
+                id: "raster-layer",
+                type: "raster",
+                source: "raster-source",
+                paint: {
+                  "raster-opacity": 0.8,
+                  "raster-resampling": "nearest",
+                },
               },
-            },
-            basemap === "mapbox://styles/mapbox/satellite-v9"
-              ? ""
-              : "road-label"
-          );
+              basemap === "mapbox://styles/mapbox/satellite-v9"
+                ? ""
+                : "road-label"
+            );
+          }
 
           map.on("load", function () {
-            setTimeout(() => {
-              setLoaded(true);
-            }, 0);
+            setLoaded(true);
           });
         });
 
@@ -77,11 +77,7 @@ const Map = ({ delay, preload, postload, basemap, zoom }) => {
 
   return (
     <div className="map-container">
-      <div
-        id="map"
-        className={`map preload-${preload} postload-${postload}`}
-        style={{ opacity: loaded ? 1 : 0 }}
-      ></div>
+      <div id="map" className="map" style={{ opacity: loaded ? 1 : 0 }}></div>
       <style global jsx>{`
         .map-container {
           position: absolute;
