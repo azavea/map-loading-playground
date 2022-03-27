@@ -21,11 +21,10 @@ const Map = ({ delay, preload, postload, basemap, zoom, raster }) => {
       setTimeout(() => {
         const place = places[getRandomInt(places.length)];
         const map = new mapboxgl.Map({
-          cooperativeGestures: true,
           container: "map",
           style: basemap,
           center: [place.Lng, place.Lat],
-          minZoom: 0,
+          minZoom: 1,
           zoom: zoom,
           maxZoom: 18,
         });
@@ -35,7 +34,7 @@ const Map = ({ delay, preload, postload, basemap, zoom, raster }) => {
           showZoom: true,
         });
 
-        postload === "none" && setLoaded(true);
+        postload === "default" && setLoaded(true);
 
         map.on("style.load", function () {
           console.log("style.load");

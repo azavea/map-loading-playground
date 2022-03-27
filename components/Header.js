@@ -8,16 +8,12 @@ import useDropdownMenu from "react-accessible-dropdown-menu-hook";
 
 const links = [
   {
-    text: "Homepage",
-    permalink: "/",
+    text: "Github",
+    permalink: "https://github.com/azavea/map-loading-playground",
   },
   {
-    text: "About",
-    permalink: "/about/",
-  },
-  {
-    text: "Areas at risk",
-    permalink: "/areas-at-risk/",
+    text: "Azavea",
+    permalink: "https://azavea.com",
   },
 ];
 
