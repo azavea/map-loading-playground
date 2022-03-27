@@ -12,3 +12,7 @@ yarn dev
 ```
 
 Open [http://localhost:3010](http://localhost:3010) with your browser to see the result.
+
+## Data sources
+
+Raster data layer from [Gridded Population of the World](https://sedac.ciesin.columbia.edu/data/set/gpw-v4-population-density-rev11/data-download)
